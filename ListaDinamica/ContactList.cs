@@ -26,7 +26,7 @@ namespace ListaDinamica
 
             while (temp != null)
             {
-                str += temp + " ";
+                str += temp + "\n\n";
                 temp = temp.GetNext();
             }
             return str;
@@ -73,16 +73,11 @@ namespace ListaDinamica
             }
         }
 
-        public Contact? Pop()
-        {
-            return tail;
-        }
-
-        public void RemoveByName(string target)
+        public bool RemoveByName(string target)
         {
             if (IsEmpty())
             {
-                return;
+                return false;
             }
 
             if (string.Equals(head.GetName(), target))
@@ -95,16 +90,18 @@ namespace ListaDinamica
                 {
                     head = head.GetNext();                
                 }
-                return;
+                return true;
             }
 
             Contact? prev = head;
             Contact? curr = head.GetNext();
+            bool found = false;
 
             while (curr != null)
             {
                 if (string.Equals(curr.GetName(), target))
                 {
+                    found = true;
                     if (curr == tail)
                     {
                         tail = prev;
@@ -115,6 +112,23 @@ namespace ListaDinamica
                 prev = curr;
                 curr = curr.GetNext();
             }
+            return found;
+        }
+
+        public Contact? FindByName(string name)
+        {
+            Contact? curr = head;
+
+            while (curr != null)
+            {
+                if (string.Equals(curr.GetName(), name))
+                {
+                    break;
+                }
+                curr = curr.GetNext();
+            }
+
+            return curr;
         }
 
         public bool IsEmpty()
